@@ -3,15 +3,15 @@
 	"id": "silent-floor",
 	"version": "${version}",
 	"name": "Silent Floor",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "The library's silent floor, providing quiet utility.",
 	"authors": [
-		"Me!"
+		"FlyInEly"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "",
+		"sources": ""
 	},
-	"license": "CC0-1.0",
+	"license": "OSL 3.0",
 	"icon": "assets/silent-floor/icon.png",
 	"environment": "*",
 	"entrypoints": {
