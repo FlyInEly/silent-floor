@@ -24,7 +24,7 @@ public class Keybinds {
                 "key." + MOD_ID + "." + keybindID,
                 InputUtil.Type.KEYSYM,
                 keycode,
-                "category." + MOD_ID + "." + keybindID)));
+                "category." + MOD_ID)));
     }
 
     public KeyBinding get(String keybindID) {
