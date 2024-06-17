@@ -31,7 +31,7 @@ public class Messenger {
 
     /**
      * Sends a command to the server.
-     * @param command the command, without a leading slash
+     * @param command The command, without a leading slash
      * @since 1.1.1
      */
     public void sendCommand(String command) {
@@ -96,21 +96,48 @@ public class Messenger {
     }
 
     /**
-     * Enters a message into the chat without sending.
+     * Drafts a message in the chat without sending.
      * @param message The message content.
      * @since 1.1.1
      */
-    public void prepareChat(String message) {
+    public void draftChat(String message) {
         MC.setScreen(new ChatScreen(message));
     }
 
     /**
-     * {@link #prepareChat(String)}
+     * {@link #draftChat(String)}
      * @custom.passes {@code message} using {@code Text.getString()}
      * @since 1.1.1
      */
-    public void prepareChat(Text message) {
-        prepareChat(message.getString());
+    public void draftChat(Text message) {
+        draftChat(message.getString());
+    }
+
+    /**
+     * Drafts a command in the chat without sending.
+     * @param command The command, without a leading slash.
+     * @since 1.2.0
+     */
+    public void draftCommand(String command) {
+        draftChat("/" + command);
+    }
+
+    /**
+     * {@link #draftCommand(String)}
+     * @passes {@code command} defaults to {@code ""}
+     * @since 1.2.0
+     */
+    public void draftCommand() {
+        draftChat("/");
+    }
+
+    /**
+     * {@link #draftCommand(String)}
+     * @custom.passes {@code command} using {@code Text.getString()}
+     * @since 1.2.0
+     */
+    public void draftCommand(Text command) {
+        draftCommand(command.getString());
     }
 
 }

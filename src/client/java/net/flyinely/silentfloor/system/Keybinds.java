@@ -12,12 +12,11 @@ public class Keybinds {
 
     private static final String KEYBIND_ALREADY_REGISTERED_ERR = "Keybind ID already registered: ";
 
-
     private final HashMap<String, KeyBinding> keybinds = new HashMap<>();
 
     public void register(String keybindID, int keycode) {
         if (keybinds.containsKey(keybindID)) {
-            LOGGER.error(KEYBIND_ALREADY_REGISTERED_ERR + keybindID);
+            LOGGER.error(KEYBIND_ALREADY_REGISTERED_ERR + "{}", keybindID);
             return;
         }
         keybinds.put(keybindID, KeyBindingHelper.registerKeyBinding(new KeyBinding(

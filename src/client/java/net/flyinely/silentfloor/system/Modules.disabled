@@ -1,0 +1,53 @@
+package net.flyinely.silentfloor.system;
+
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.flyinely.silentfloor.structure.Timer;
+import net.minecraft.client.MinecraftClient;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.Map;
+
+public class Modules {
+
+    // Each key of 'timers' is a Class of any type that extends Timer.
+    // Due to the token '?' instead of 'T', the keys can differ in type.
+
+    // Each value of 'timers' is a Timer.
+    // Due to polymorphism, the values can be any type that extends Timer, and can differ in type.
+
+    // Each value of 'timerList' is a Timer.
+    // This mirror list exists to allow easy iteration through all Timers.
+
+    private final Map<Class<? extends Timer>, Timer> timers;
+    private final ArrayList<Timer> timerList;
+
+    public Modules() {
+        this.timerList = new ArrayList<>();
+        this.timers = new IdentityHashMap<>();
+
+    }
+
+    // Initialize any number of T's, where T extends Timer
+    // [To-do] @SafeVarargs has been placed here by suggestion. The assertion may need implementation
+    @SafeVarargs
+    public final <T extends Timer> void create(T... timers) {
+        for (Timer timer : timers) {
+            // Add each T to Map timers
+            this.timers.put(timer.getClass(), timer);
+            this.timerList.add(timer);
+        }
+    }
+
+    public void register() {
+        ClientTickEvents.END_CLIENT_TICK.register(this::endTick);
+    }
+
+    private void endTick(MinecraftClient client) {
+        for (Timer timer : timerList) {
+            timer.tick();
+        }
+
+    }
+
+}
