@@ -1,13 +1,14 @@
 package net.flyinely.silentfloor.structure;
 
-public abstract class Action {
+public interface IAction {
 
     // Abstract methods
-    public abstract int execute();
+    int execute();
 
 
 
     //ReversibleAction public abstract boolean undo();
     // To be placed in a timer, and the timer .runs the action on completion
+    // ALlow passing to a Keybind object which needs making and gets put in Keybinds
 
 }

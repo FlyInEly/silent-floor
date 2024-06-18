@@ -1,17 +1,18 @@
-package net.flyinely.silentfloor.structure.timer;
+package net.flyinely.silentfloor.structure.timers;
 
-import net.flyinely.silentfloor.structure.Action;
-import net.flyinely.silentfloor.structure.actions.PlaceboAction;
+import net.flyinely.silentfloor.structure.IAction;
+import net.flyinely.silentfloor.structure.ITimer;
+import net.flyinely.silentfloor.structure.actions.impl.PlaceboAction;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractTimer implements Timer {
+public abstract class AbstractTimer implements ITimer {
 
     protected boolean running;
-    protected boolean impatient;
+    private final boolean impatient;
     protected final long duration;
-    @NotNull protected final Action action;
+    @NotNull protected final IAction action;
 
-    protected AbstractTimer(Action action, boolean impatient, long duration) {
+    protected AbstractTimer(IAction action, boolean impatient, long duration) {
         this.action = (action != null) ? action : new PlaceboAction();
         this.impatient = impatient;
         this.duration = duration;
@@ -24,7 +25,7 @@ public abstract class AbstractTimer implements Timer {
         this(null, duration);
     }
 
-    protected AbstractTimer(Action action, long duration) {
+    protected AbstractTimer(IAction action, long duration) {
         this(action,true, duration);
     }
 

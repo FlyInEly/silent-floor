@@ -3,15 +3,12 @@ package net.flyinely.silentfloor;
 import net.fabricmc.api.ClientModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.flyinely.silentfloor.structure.actions.DisplayAction;
-import net.flyinely.silentfloor.structure.timer.ResettableSleepingTimer;
-import net.flyinely.silentfloor.structure.timer.SimpleSleepingTimer;
+import net.flyinely.silentfloor.structure.timers.impl.TickingTimer;
+import net.flyinely.silentfloor.structure.actions.impl.DisplayAction;
 import net.flyinely.silentfloor.system.Keybinds;
 import net.flyinely.silentfloor.system.Messenger;
-import net.flyinely.silentfloor.system.OldTimers;
 import net.flyinely.silentfloor.system.Timers;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +24,13 @@ public class SilentFloorClient implements ClientModInitializer {
 
 	public static final Messenger MESSENGER = new Messenger();
 	public static final Keybinds KEYBINDS = new Keybinds();
-	public static final OldTimers OLD_TIMERS = new OldTimers();
 	public static final Timers TIMERS = new Timers();
 
 	@Override
 	public void onInitializeClient() {
 
-		OLD_TIMERS.register();
-
 		// Register events
+		TIMERS.register();
 		ClientTickEvents.END_CLIENT_TICK.register(this::onEndTick);
 
 		// Register keybinds
@@ -63,11 +58,13 @@ public class SilentFloorClient implements ClientModInitializer {
 			MESSENGER.sendCommand("say [TEST] C2S command");
 		}
 		while(KEYBINDS.get("draftChat").wasPressed()) {
-			TIMERS.register("draftChat", new ResettableSleepingTimer(
-					new DisplayAction(Text.of("banana")),true,1000));
+			TIMERS.set("draftChat",
+					new TickingTimer.Builder(30, new DisplayAction("banana")).autoReset().build());
+			TIMERS.set("test",
+					new TickingTimer.Builder(10, new DisplayAction("test")).manualReset().build());
 			MESSENGER.draftChat("[TEST] C2S chat message preview");
 		}
-//		while(TIMERS.get("draftChat") != null && TIMERS.get("draftChat").hasExpired()) {
+		//		while(TIMERS.get("draftChat") != null && TIMERS.get("draftChat").hasExpired()) {
 //			if (MC.currentScreen instanceof ChatScreen) {
 //				MESSENGER.sendChat("Bye!");
 //				// Make mixin that injects get chatField method into ChatScreen
@@ -75,7 +72,7 @@ public class SilentFloorClient implements ClientModInitializer {
 ////				c.
 //				MC.currentScreen.close();
 //			}
-//			TIMERS.clear("draftChat");
+//			((TickingTimer) TIMERS.get("draftChat")).reset();
 //		}
 
 		while(KEYBINDS.get("draftCommand").wasPressed()) {

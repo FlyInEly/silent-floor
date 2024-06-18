@@ -1,11 +1,14 @@
-package net.flyinely.silentfloor.structure.actions;
+package net.flyinely.silentfloor.structure.actions.impl;
 
 import net.flyinely.silentfloor.SilentFloorClient;
-import net.flyinely.silentfloor.structure.Action;
-import net.flyinely.silentfloor.system.Messenger;
+import net.flyinely.silentfloor.structure.IAction;
 import net.minecraft.text.Text;
 
-public class DisplayAction extends Action {
+public class DisplayAction implements IAction {
+
+    public DisplayAction(String message) {
+        this(Text.of(message));
+    }
 
     public enum DisplayArea {
         CHAT,
