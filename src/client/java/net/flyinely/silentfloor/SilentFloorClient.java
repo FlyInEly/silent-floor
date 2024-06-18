@@ -3,12 +3,14 @@ package net.flyinely.silentfloor;
 import net.fabricmc.api.ClientModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.flyinely.silentfloor.structure.actions.DisplayAction;
 import net.flyinely.silentfloor.system.Keybinds;
 import net.flyinely.silentfloor.system.Messenger;
 import net.flyinely.silentfloor.system.Timers;
-import net.flyinely.silentfloor.structure.timers.GametickTimer;
+import net.flyinely.silentfloor.structure.timers.TickingTimer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,19 +61,19 @@ public class SilentFloorClient implements ClientModInitializer {
 			MESSENGER.sendCommand("say [TEST] C2S command");
 		}
 		while(KEYBINDS.get("draftChat").wasPressed()) {
-			TIMERS.register("test", new GametickTimer(30));
+			TIMERS.register("draftChat", new TickingTimer(30, new DisplayAction(Text.of("banana"))));
 			MESSENGER.draftChat("[TEST] C2S chat message preview");
 		}
-		while(TIMERS.get("test") != null && TIMERS.get("test").hasExpired()) {
-			if (MC.currentScreen instanceof ChatScreen) {
-				MESSENGER.sendChat("Bye!");
-				// Make mixin that injects get chatField method into ChatScreen
-//				ChatScreen c = new ChatScreen("test");
-//				c.
-				MC.currentScreen.close();
-			}
-			TIMERS.clear("test");
-		}
+//		while(TIMERS.get("draftChat") != null && TIMERS.get("draftChat").hasExpired()) {
+//			if (MC.currentScreen instanceof ChatScreen) {
+//				MESSENGER.sendChat("Bye!");
+//				// Make mixin that injects get chatField method into ChatScreen
+////				ChatScreen c = new ChatScreen("test");
+////				c.
+//				MC.currentScreen.close();
+//			}
+//			TIMERS.clear("draftChat");
+//		}
 
 		while(KEYBINDS.get("draftCommand").wasPressed()) {
 			MESSENGER.draftCommand("say [TEST] C2S command preview");

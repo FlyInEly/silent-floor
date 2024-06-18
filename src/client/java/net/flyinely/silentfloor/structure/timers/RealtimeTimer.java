@@ -4,9 +4,12 @@ import net.flyinely.silentfloor.structure.Timer;
 
 public class RealtimeTimer extends Timer {
 
+    protected RealtimeTimer(long duration) {
+        super(duration);
+    }
 
     @Override
-    public void tick() {
-
+    public boolean hasExpired() {
+        return false;
     }
 }
