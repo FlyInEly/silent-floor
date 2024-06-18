@@ -1,21 +1,21 @@
 package net.flyinely.silentfloor.structure.timers;
 
 import net.flyinely.silentfloor.structure.Action;
-import net.flyinely.silentfloor.structure.Timer;
+import net.flyinely.silentfloor.structure.OldTimer;
 
-public class TickingTimer extends Timer {
+public class OldTickingTimer extends OldTimer {
 
     private static final int TICKS_PER_SECOND = 20;
 
-    public TickingTimer(long duration, Action action) {
+    public OldTickingTimer(long duration, Action action) {
         super(duration, action);
     }
 
-    public TickingTimer(long duration) {
+    public OldTickingTimer(long duration) {
         this(duration, null);
     }
 
-    public TickingTimer() {
+    public OldTickingTimer() {
         this(TICKS_PER_SECOND);
     }
 

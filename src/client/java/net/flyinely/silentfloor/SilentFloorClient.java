@@ -4,12 +4,13 @@ import net.fabricmc.api.ClientModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.flyinely.silentfloor.structure.actions.DisplayAction;
+import net.flyinely.silentfloor.structure.timer.ResettableSleepingTimer;
+import net.flyinely.silentfloor.structure.timer.SimpleSleepingTimer;
 import net.flyinely.silentfloor.system.Keybinds;
 import net.flyinely.silentfloor.system.Messenger;
+import net.flyinely.silentfloor.system.OldTimers;
 import net.flyinely.silentfloor.system.Timers;
-import net.flyinely.silentfloor.structure.timers.TickingTimer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -26,12 +27,13 @@ public class SilentFloorClient implements ClientModInitializer {
 
 	public static final Messenger MESSENGER = new Messenger();
 	public static final Keybinds KEYBINDS = new Keybinds();
+	public static final OldTimers OLD_TIMERS = new OldTimers();
 	public static final Timers TIMERS = new Timers();
 
 	@Override
 	public void onInitializeClient() {
 
-		TIMERS.register();
+		OLD_TIMERS.register();
 
 		// Register events
 		ClientTickEvents.END_CLIENT_TICK.register(this::onEndTick);
@@ -61,7 +63,8 @@ public class SilentFloorClient implements ClientModInitializer {
 			MESSENGER.sendCommand("say [TEST] C2S command");
 		}
 		while(KEYBINDS.get("draftChat").wasPressed()) {
-			TIMERS.register("draftChat", new TickingTimer(30, new DisplayAction(Text.of("banana"))));
+			TIMERS.register("draftChat", new ResettableSleepingTimer(
+					new DisplayAction(Text.of("banana")),true,1000));
 			MESSENGER.draftChat("[TEST] C2S chat message preview");
 		}
 //		while(TIMERS.get("draftChat") != null && TIMERS.get("draftChat").hasExpired()) {

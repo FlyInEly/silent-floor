@@ -26,17 +26,17 @@ public class DisplayAction extends Action {
     }
 
     @Override
-    public boolean execute() {
+    public int execute() {
         return switch (displayArea) {
             case CHAT -> {
                 SilentFloorClient.MESSENGER.display(message, false);
-                yield true;
+                yield 1;
             }
             case ACTION_BAR -> {
                 SilentFloorClient.MESSENGER.display(message, true);
-                yield true;
+                yield 1;
             }
-            default -> false;
+            default -> 0;
         };
     }
 

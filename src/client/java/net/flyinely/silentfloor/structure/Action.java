@@ -3,7 +3,7 @@ package net.flyinely.silentfloor.structure;
 public abstract class Action {
 
     // Abstract methods
-    public abstract boolean execute();
+    public abstract int execute();
 
 
 

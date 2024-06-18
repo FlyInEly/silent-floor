@@ -1,7 +1,7 @@
 package net.flyinely.silentfloor.system;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.flyinely.silentfloor.structure.Timer;
+import net.flyinely.silentfloor.structure.OldTimer;
 import net.minecraft.client.MinecraftClient;
 
 import java.util.ArrayList;
